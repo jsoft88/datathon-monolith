@@ -1,0 +1,9 @@
+models:
+  - name: stg_call_center_interactions
+    description: Call center interactions with customers, one row per interaction.
+    columns:
+      - name: interaction_id
+        description: Unique interaction ID
+        data_tests:
+          - not_null
+          - unique

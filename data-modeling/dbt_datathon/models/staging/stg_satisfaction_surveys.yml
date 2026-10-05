@@ -1,0 +1,9 @@
+models:
+  - name: stg_satisfaction_surveys
+    description: Post-interaction satisfaction surveys (CSAT, NPS), one row per survey.
+    columns:
+      - name: survey_id
+        description: Unique survey ID
+        data_tests:
+          - not_null
+          - unique

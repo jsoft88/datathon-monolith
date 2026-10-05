@@ -1,0 +1,9 @@
+models:
+  - name: stg_complaints
+    description: Complaints and claims system (PQR), one row per case.
+    columns:
+      - name: complaint_id
+        description: Unique complaint/claim ID
+        data_tests:
+          - not_null
+          - unique

@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip install uv
+      - cd data-modeling
+      - uv venv --python 3.11
+      - source .venv/bin/activate
+      - uv pip install -r requirements.txt
+      - cd dbt_datathon
+  build:
+    commands:
+      - dbt deps
+      - dbt build --select models/staging
+  post_build:
+    on-failure: CONTINUE
+    commands:
+      - OPS=""
+      - dbt docs generate && OPS=$(echo 'docs_generate')
+      - echo "Push dbt metadata to datahub bucket --> s3://datathon-factored/dbt_metadata/"
+      - '[ -f target/catalog.json ] && aws s3 cp target/catalog.json s3://datathon-factored/dbt_metadata/catalog.json && OPS=$(echo "$OPS;uploaded_catalog")'
+      - '[ -f target/run_results.json ] && aws s3 cp target/run_results.json s3://datathon-factored/dbt_metadata/run_results.json && OPS=$(echo "$OPS;uploaded_run_results")'
+      - '[ -f target/manifest.json ] && aws s3 cp target/manifest.json s3://datathon-factored/dbt_metadata/manifest.json && OPS=$(echo "$OPS;uploaded_manifest")'
+    finally:
+      - echo "DEBUG --> METADATA OPERATIONS EXECUTED (if nothing appears after the arrow, then nothing was executed) --> $OPS"

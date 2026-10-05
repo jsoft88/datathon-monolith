@@ -1,0 +1,14 @@
+models:
+  - name: stg_service_agents
+    description: Customer service agents, one row per agent.
+    columns:
+      - name: agent_id
+        description: Unique agent ID
+        data_tests:
+          - not_null
+          - unique
+      - name: employee_code
+        description: Employee code
+        data_tests:
+          - not_null
+          - unique

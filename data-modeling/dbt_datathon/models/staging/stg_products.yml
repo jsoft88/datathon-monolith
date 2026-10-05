@@ -1,0 +1,14 @@
+models:
+  - name: stg_products
+    description: Active financial products of customers, one row per product.
+    columns:
+      - name: product_id
+        description: Unique product ID
+        data_tests:
+          - not_null
+          - unique
+      - name: product_number
+        description: Account/card/policy number
+        data_tests:
+          - not_null
+          - unique

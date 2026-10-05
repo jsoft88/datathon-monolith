@@ -1,0 +1,9 @@
+models:
+  - name: stg_campaign_sends
+    description: Individual marketing campaign sends, one row per send.
+    columns:
+      - name: send_id
+        description: Unique send ID
+        data_tests:
+          - not_null
+          - unique

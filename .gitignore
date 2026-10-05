@@ -1,0 +1,9 @@
+api_service/factored_api/__pycache__/
+api_service/factored_api/ai/__pycache__/
+api_service/factored_api/utils/__pycache__/
+api_service/factored_api/endpoints/__pycache__/
+api_service/factored_api/models/__pycache__/
+data-modeling/.DS_Store
+data-modeling/dbt_datathon/.DS_Store
+data-modeling/dbt_datathon/.vscode/
+data-modeling/logs

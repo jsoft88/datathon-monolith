@@ -1,0 +1,9 @@
+models:
+  - name: stg_transactions
+    description: Daily financial transactions, one row per transaction.
+    columns:
+      - name: transaction_id
+        description: Unique transaction ID
+        data_tests:
+          - not_null
+          - unique

@@ -1,0 +1,14 @@
+models:
+  - name: stg_branches
+    description: Physical bank branches, one row per branch.
+    columns:
+      - name: branch_id
+        description: Unique branch ID
+        data_tests:
+          - not_null
+          - unique
+      - name: branch_code
+        description: Internal branch code
+        data_tests:
+          - not_null
+          - unique

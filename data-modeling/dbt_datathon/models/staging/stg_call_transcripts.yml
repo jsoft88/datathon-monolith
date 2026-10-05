@@ -1,0 +1,9 @@
+models:
+  - name: stg_call_transcripts
+    description: Call center call transcripts, one row per transcript.
+    columns:
+      - name: transcript_id
+        description: Unique transcript ID
+        data_tests:
+          - not_null
+          - unique

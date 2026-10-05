@@ -1,0 +1,14 @@
+models:
+  - name: stg_customers
+    description: Bank customer dimension table with one row per customer.
+    columns:
+      - name: customer_id
+        description: Unique customer ID
+        data_tests:
+          - not_null
+          - unique
+      - name: document_number
+        description: Identity document number
+        data_tests:
+          - not_null
+          - unique

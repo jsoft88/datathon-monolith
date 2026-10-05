@@ -1,0 +1,9 @@
+models:
+  - name: stg_digital_events
+    description: Digital channel interaction events (mobile app, web), one row per event.
+    columns:
+      - name: event_id
+        description: Unique event ID
+        data_tests:
+          - not_null
+          - unique

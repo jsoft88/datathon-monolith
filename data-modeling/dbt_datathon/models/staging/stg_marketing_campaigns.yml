@@ -1,0 +1,9 @@
+models:
+  - name: stg_marketing_campaigns
+    description: Bank marketing campaigns, one row per campaign.
+    columns:
+      - name: campaign_id
+        description: Unique campaign ID
+        data_tests:
+          - not_null
+          - unique
