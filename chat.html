@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>AI Support Chat</title>
+        <style>
+            #chat-box {
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            max-width: 720px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 12px;
+            }
+            #chat-log {
+            height: 320px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            background: #f7f7f7;
+            padding: 8px;
+            margin-bottom: 8px;
+            }
+            #chat-row { display: flex; gap: 8px; }
+            #chat-input { flex: 1; padding: 8px; }
+        </style>
+    </head>
+    <body>
+        <div id="chat-box">
+            <div id="chat-status">Disconnected</div>
+            <div id="chat-log"></div>
+            <div id="chat-row">
+            <input id="chat-input" placeholder="Describe a disputed transaction..." />
+            <button id="chat-send">Send</button>
+            </div>
+        </div>
+    </body>
+    <script>
+    (() => {
+        const WS_URL = "ws://ec2-54-80-246-224.compute-1.amazonaws.com:8000/ws/chat";
+        const CUSTOMER_ID = "CLI-G4X2AMVD62NR"
+        const url = new URL(WS_URL, window.location.href);
+        url.searchParams.set("customer_id", CUSTOMER_ID);
+        const wsUrl = url.toString();
+        const log = document.getElementById("chat-log");
+        const status = document.getElementById("chat-status");
+        const input = document.getElementById("chat-input");
+        const sendBtn = document.getElementById("chat-send");
+        const write = (who, text) => {
+            log.textContent += who + ": " + text + "\n\n";
+            log.scrollTop = log.scrollHeight;
+        };
+        const socket = new WebSocket(wsUrl);
+        socket.onopen = () => { status.textContent = "Connected " + wsUrl; };
+        socket.onclose = () => { status.textContent = "Disconnected"; };
+        socket.onerror = () => { status.textContent = "Error — is factored-api running on :8000?"; };
+        socket.onmessage = (event) => {
+        let payload = event.data;
+        try { payload = JSON.parse(event.data); } catch (_err) {}
+        if (payload && payload.reply) {
+            write("agent", payload.reply + (payload.sql ? "\\nSQL: " + payload.sql : ""));
+        } else {
+            write("agent", typeof payload === "string" ? payload : JSON.stringify(payload, null, 2));
+        }
+        };
+        const send = () => {
+        const message = input.value.trim();
+        if (!message || socket.readyState !== WebSocket.OPEN) return;
+        socket.send(JSON.stringify({ message, customer_id: CUSTOMER_ID }));
+        write("you", message);
+        input.value = "";
+        };
+        sendBtn.onclick = send;
+        input.addEventListener("keydown", (event) => { if (event.key === "Enter") send(); });
+    })();
+    </script>
+</html>
