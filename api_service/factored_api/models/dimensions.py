@@ -73,7 +73,7 @@ class Customer(ContractModel):
     marital_status: str | None = Field(default=None, max_length=20, description="Marital status")
     education_level: str | None = Field(default=None, max_length=50, description="Education level")
     registration_date: datetime = Field(..., description="Registration date as customer")
-    registration_branch_id: str = Field(..., max_length=20, description="Branch ID where registered")
+    # registration_branch_id: str = Field(..., max_length=20, description="Branch ID where registered")
     customer_status: CustomerStatus = Field(
         ...,
         description="Status (Active, Inactive, Suspended, Closed)",
