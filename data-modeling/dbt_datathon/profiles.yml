@@ -1,4 +1,4 @@
-sand_tech:
+dbt_datathon:
   target: "prod"
   outputs:
     prod:
